@@ -1,0 +1,40 @@
+@charset "UTF-8";
+@import "fun";
+
+.page-content {
+  bottom: rem(50px);
+}
+
+.msg-remind{
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 999999999;
+
+  li{
+    max-width: rem(100px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: rem(50px);
+  overflow: hidden;
+  padding: 9px 6px;
+  background-color: #fff;
+
+  .msg-input {
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0 10px;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #7d7e83;
+  }
+}
