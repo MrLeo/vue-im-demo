@@ -29,9 +29,9 @@
             }
         },
         ready(){
-            const _self=this
+            const _self = this
             _self.scrollToBottom()
-            _self.$nextTick(()=>{
+            _self.$nextTick(function () {
                 _self.$els.msgInput.focus()
             })
         },
@@ -45,6 +45,7 @@
                     user.noRead = 0
                     break
                 }
+                setTimeout(_self.scrollToBottom, 0)
                 console.log('[Leo]getMsgs => ', msgs)
                 return msgs
             }
@@ -79,7 +80,10 @@
                 } else {
                     jx_common.tip("请输入聊天内容")
                 }
-                setTimeout(_self.scrollToBottom,0)
+                setTimeout(_self.scrollToBottom, 0)
+                _self.$nextTick(function () {
+                    _self.$els.msgInput.focus()
+                })
                 return false
             }
         }
@@ -95,7 +99,8 @@
             </ul>
         </div>
         <div class="send-msg">
-            <textarea class="msg-input" placeholder="请输入聊天内容" v-model="content" @keyup.13="submit" autofocus v-el:msg-input></textarea>
+            <textarea class="msg-input" placeholder="请输入聊天内容" v-model="content" @keyup.13="submit" autofocus
+                      v-el:msg-input></textarea>
             <a href="javascript:void(0)" class="msg-btn" @click="submit">发送</a>
         </div>
     </div>

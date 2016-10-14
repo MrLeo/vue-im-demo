@@ -36,7 +36,7 @@
             </ul>
         </div>
     </div>
-    <router-view keep-alive></router-view>
+    <router-view></router-view>
 </template>
 <script>
     import pageHeader from 'components/h5/page-header'
@@ -73,13 +73,11 @@
         },
         created(){
             if (!this.me.userName) {
-                router.go({name: 'pclogin'})
+                router.go({path: '/h5/login'})
             }
             this.listenLogin()
             this.listenLogout()
             this.listenMsg()
-        },
-        ready(){
         },
         methods: {
             doLogout(){
@@ -135,4 +133,4 @@
         }
     }
 </script>
-<style lang="scss" scoped src="assets/css/index.scss"></style>
+<style lang="scss" scoped src="assets/css/h5index.scss"></style>

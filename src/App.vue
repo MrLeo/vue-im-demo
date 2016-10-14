@@ -1,6 +1,7 @@
 <template>
-    <div id="app">
-        <router-view keep-alive></router-view>
+    <div id="app" :style="{'height': wHeight,'width':wWidth}">
+        <router-view></router-view>
+        <!--keep-alive-->
     </div>
 </template>
 <script>
@@ -9,26 +10,38 @@
         name: "App",
         store,
         data() {
-            return {}
+            return {
+                wHeight: "100%",
+                wWidth: "100%"
+            }
         },
         components: {},
         ready(){
-            !(function(doc, win) {
+            !(function (doc, win) {
                 var docEle = doc.documentElement,
                         evt = "onorientationchange" in window ? "orientationchange" : "resize",
-                        fn = function() {
+                        fn = function () {
                             var width = docEle.clientWidth;
-                            console.log('[Leo]浏览器宽度 => ', width)
                             if (width <= 768) {
-                                router.go({name: 'h5login'})
+                                if (router.app.$route.name != 'h5login')
+                                    router.go({name: 'h5login'})
                                 width && (docEle.style.fontSize = 20 * (width / 375) + "px");
-                            }else{
-                                router.go({name: 'pclogin'})
+                            } else {
+                                if (router.app.$route.name != 'pclogin')
+                                    router.go({name: 'pclogin'})
                             }
                         };
                 win.addEventListener(evt, fn, false);
                 doc.addEventListener("DOMContentLoaded", fn, false);
             }(document, window));
+        },
+        events: {
+            'change-window-size': function (obj) {
+                const _self = this
+                console.log('[Leo]窗口改变 => ', obj)
+                _self.wHeight = obj.height + 'px'
+                _self.wWidth = obj.width + 'px'
+            }
         }
     }
 </script>

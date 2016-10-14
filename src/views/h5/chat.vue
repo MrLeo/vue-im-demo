@@ -8,17 +8,23 @@
         <page-header>
             <i slot="left-btn" class="fa fa-chevron-left" aria-hidden="true" @click="goBack"
                v-text="allMsgRemind.length>0?'('+allMsgRemind.length+')':''"></i>
-            <span slot="header-title">聊天</span>
+            <span slot="header-title">{{userName}}</span>
         </page-header>
         <div class="page-content">
-            <ul>
-                <li v-for="msg in getMsgs">
-                    <msg-item :type="msg.from.userId==me.userId?'me':'other'" :msg="msg"></msg-item>
-                </li>
-            </ul>
+            <div class="list">
+                <ul>
+                    <li v-for="msg in getMsgs">
+                        <msg-item :type="msg.from.userId==me.userId?'me':'other'" :msg="msg"></msg-item>
+                    </li>
+                </ul>
+            </div>
         </div>
         <footer>
-            <input type="text" class="msg-input" placeholder="请输入聊天内容" v-model="content" @keyup.13="submit" autofocus
+            <input type="text" class="msg-input" placeholder="请输入聊天内容"
+                   v-model="content"
+                   @keyup.13="submit"
+                   @focus="inputFocus"
+                   @blur="inputBlur"
                    v-el:msg-input>
         </footer>
     </div>
@@ -48,15 +54,17 @@
         },
         data(){
             return {
-                content: ''
+                content: '',
+                userName: '聊天'
             }
         },
         ready(){
             const _self = this
+            _self.userName = _self.$route.params.name
             _self.scrollToBottom()
-            _self.$nextTick(()=> {
-                _self.$els.msgInput.focus()
-            })
+            /*_self.$nextTick(()=> {
+             _self.$els.msgInput.focus()
+             })*/
         },
         computed: {
             getMsgs(){
@@ -68,6 +76,7 @@
                     user.noRead = 0
                     break
                 }
+                setTimeout(_self.scrollToBottom, 0)
                 return msgs
             }
         },
@@ -77,8 +86,7 @@
             },
             //让浏览器滚动条保持在最低部
             scrollToBottom: function () {
-                //window.scrollTo(0, document.querySelectorAll('.list ul')[0].clientHeight)
-                window.document.querySelectorAll('.page-content')[0].scrollTop = document.querySelectorAll('.page-content ul')[0].clientHeight
+                window.document.querySelectorAll('.list')[0].scrollTop = document.querySelectorAll('.list ul')[0].clientHeight
             },
             //提交聊天消息内容
             submit () {
@@ -105,9 +113,28 @@
                     jx_common.tip("请输入聊天内容")
                 }
                 setTimeout(_self.scrollToBottom, 0)
+                _self.$nextTick(function () {
+                    _self.$els.msgInput.focus()
+                })
                 return false
+            },
+            resetWindowSize(){
+                const _self = this
+                _self.$dispatch('change-window-size', {
+                    "height": window.innerHeight,
+                    "width": window.innerWidth
+                })
+                _self.$nextTick(function () {
+                    setTimeout(_self.scrollToBottom, 0)
+                })
+            },
+            inputFocus(){
+                this.resetWindowSize()
+            },
+            inputBlur(){
+                this.resetWindowSize()
             }
         }
     }
 </script>
-<style lang="scss" scoped src="assets/css/chat.scss"></style>
+<style lang="scss" scoped src="assets/css/h5chat.scss"></style>

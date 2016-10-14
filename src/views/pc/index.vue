@@ -8,7 +8,8 @@
             </span>
         </div>
         <ul class="user-list">
-            <li v-for="item in online.users" track-by="$index" @click='chat(item)'>
+            <li v-for="item in online.users" track-by="$index" @click='chat(item)'
+                :class="{'v-link-active':item.userId==currentActive}">
                 {{item.userName}} <span class="noread" v-if="item.noRead">{{item.noRead}}</span>
             </li>
         </ul>
@@ -40,6 +41,11 @@
                 removeUser: actions.removeUser,
                 logout: actions.logout,
                 addReceiveMsg: actions.addReceiveMsg
+            }
+        },
+        data(){
+            return {
+                currentActive: '-1'
             }
         },
         created(){
@@ -91,6 +97,7 @@
                 }
             },
             chat(user){
+                this.currentActive = user.userId
                 router.go({
                     name: 'pcChat',
                     params: {
@@ -210,7 +217,7 @@
         right: 0;
     }
 
-    .v-link-active{
+    .v-link-active {
         background-color: #efefef;
     }
 </style>

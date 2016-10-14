@@ -36,32 +36,39 @@ const mutations = {
     },
     [types.ADD_USERS](state, list) {
         console.log('[Leo]ADD_USERS => ', list)
-        for (let key of list) {
-            if (state.online.users.hasOwnProperty(key)) continue
-            if (key.userId == state.me.userId) continue
+        for (let user of list) {
+            if (state.online.users.hasOwnProperty(user)) continue
+            if (user.userId == state.me.userId) continue
 
-            if (!key.msg)key.msg = []
-            if (!key.noRead)key.noRead = 0
+            user.msg = user.msg && []
+            user.noRead = user.noRead && 0
 
             if (!state.online.users.length) {
-                state.online.users.push(key)
+                state.online.users.push(user)
             } else {
                 for (let online of state.online.users) {
-                    if (online.userId != key.userId) {
-                        state.online.users.push(key)
+                    if (online.userId != user.userId) {
+                        state.online.users.push(user)
                     }
                 }
             }
         }
     },
     [types.REMOVE_USER](state, userId) {
-        let removedUser = {}
-        let users = state.online.users
-        for (let i in users) {
-            if (users[i] && users[i].userId == userId) {
-                removedUser = users[i]
-                console.log('[Leo]REMOVE_USER => ', users[i])
-                state.online.users.splice(i, 1)
+        let removedUser = null
+        //let users = state.online.users
+        //for (let i in users) {
+        //    if (users[i] && users[i].userId == userId) {
+        //        removedUser = users[i]
+        //        console.log('[Leo]REMOVE_USER => ', users[i])
+        //        state.online.users.splice(i, 1)
+        //    }
+        //}
+        for (let [index,user] of state.online.users.entries()) {
+            if (user && user.userId == userId) {
+                removedUser = user
+                console.log('[Leo]REMOVE_USER => ', user)
+                state.online.users.splice(index, 1)
             }
         }
         return removedUser
@@ -97,9 +104,8 @@ const mutations = {
         state.allMsgRemind.push(msg)
     },
     [types.REMOVE_REMIND](state, user){
-        let reminds = state.allMsgRemind
-        for (let index in reminds) {
-            if (reminds[index].from.userId == user.userId) {
+        for (let [index,remind] of state.allMsgRemind.entries()) {
+            if (remind.from.userId == user.userId) {
                 state.allMsgRemind.splice(index, 1)
             }
         }

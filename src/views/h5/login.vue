@@ -55,7 +55,7 @@
                 }
 
                 //连接websocket后端服务器
-                _self.setSocket(io('ws://127.0.0.1:3000'))
+                _self.setSocket(io('ws://192.168.200.9:3000'))//TODO:修改websocket服务器地址
 
                 if (_self.socket) {
                     //告诉服务器端有用户登录
@@ -86,10 +86,11 @@
         position: absolute;
         top: 50%;
         left: 50%;
+        transform: -moz-translate(-50%,-50%);
+        transform: -webkit-translate(-50%,-50%);
+        transform: translate(-50%,-50%);
         text-align: center;
         width: 80%;
-        margin-left: -200px;
-        margin-top: -150px;
         padding: 50px 20px;
         border-radius: 5px;
         box-shadow: 1px 1px 2px #ccc, -1px -1px 2px #ccc;

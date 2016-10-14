@@ -1,7 +1,8 @@
 <template>
     <section :class="type">
         <header>
-            <time>{{getSendTime}}</time>
+            <!--<time>{{getSendTime}}</time>&nbsp;&nbsp;-->
+            <timeago :since="msg.sendtime" :auto-update="10"></timeago>
             <span>{{msg.from.userName}}</span>
         </header>
         <div>{{msg.content}}</div>
@@ -11,12 +12,7 @@
     import date from 'utils/convert/date'
     export default{
         name: 'msg-item',
-        props: ['type', 'msg'],
-        computed: {
-            getSendTime(){
-                return date.getLocalTime(this.msg.sendtime)
-            }
-        }
+        props: ['type', 'msg']
     }
 </script>
 <style scoped>
@@ -33,7 +29,7 @@
     }
 
     section header {
-        font-size: smaller;
+        font-size: .5rem !important;
         color: #ccc;
     }
 </style>
