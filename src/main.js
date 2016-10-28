@@ -1,46 +1,41 @@
 import Vue from 'vue'
 import App from './App'
-import filter from './filter'
-import VueResource from 'vue-resource'
-import VueRouter from 'vue-router'
-import {
-    configRouter
-} from './config_router'
-import infiniteScroll from 'vue-infinite-scroll'
-import VueTouch from 'vue-touch'
-import VueTimeago from 'vue-timeago'
+import router from './router'
+import store from './store'
+import * as filters from './filters'
 
-/**
- * 注册插件
- */
-Vue.use(filter)
-Vue.use(VueResource)
-Vue.use(VueRouter)
-Vue.use(infiniteScroll)
-Vue.use(VueTouch)
-Vue.use(VueTimeago, {
-    name: 'timeago', // component name, `timeago` by default
-    autoUpdate: 1,
-    maxTime: 86400,
-    locale: 'zh-CN',
-    locales: {
-        'en-US': require('vue-timeago/locales/en-US.json'),
-        'zh-CN': require('vue-timeago/locales/zh-CN.json')
-    }
+// ajax插件（fetch）
+// https://github.com/github/fetch
+import 'whatwg-fetch'
+
+// Lazyload - 图片延迟加载
+// <https://github.com/hilongjw/vue-lazyload>
+// supports both of Vue 1.0 and Vue 2.0
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload, {
+    preLoad: 1.3,
+    error: './static/images/icon_default.png',
+    loading: './static/images/icon_default.png',
+    attempt: 1
 })
 
-/**
- * 路由配置
- */
-Vue.config.debug = true
-var router = new VueRouter({
-    //root:'/live',
-    hashbang: true,
-    history: false,
-    saveScrollPosition: true,
-    suppressTransitionError: false // TODO：开发环境
-    //suppressTransitionError: true // TODO：生产环境
+Object.keys(filters).forEach(key => {
+    Vue.filter(key, filters[key])
 })
+
+Vue.config.devtools = true//TODO：开发阶段使用
+
 window.router = router
-configRouter(router)
-router.start(App, 'app')
+
+const app = new Vue({
+    router,
+    store,
+    ...App // Object spread copying everything from App.vue : render: h => h(App)
+}).$mount('#app')
+
+/* eslint-disable no-new */
+//new Vue({
+//    el: '#app',
+//    template: '<App/>',
+//    components: {App}
+//})
