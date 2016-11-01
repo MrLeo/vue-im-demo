@@ -22,7 +22,7 @@ function checkStatus(response) {
 }
 
 /**
- * Requests a URL, returning a promise.
+ * Default Get Requests a URL, returning a promise.
  *
  * @param  {string} url       The URL we want to request
  * @param  {object} [options] The options we want to pass to "fetch"
@@ -32,5 +32,25 @@ export default function Fetch(url, options) {
     return fetch(url, options)
         .then(checkStatus)
         .then(parseJSON)
+        //.then((data) => ({data}))
+        .catch((err) => ({err}));
+}
+
+/**
+ * Post request a url,returning a promise
+ * @param url                       The URL we want to request
+ * @param params                    The params we want to pass to "fetch"
+ * @param params                    The options we want to pass to "fetch"
+ * @returns {Promise.<TResult>}     An object containing either "data" or "err"
+ * @constructor
+ */
+export function FetchPost(url, params = {}, option = {}) {
+    return fetch(url, {
+        method: "POST",
+        body: JSON.stringify(params),
+        option
+    }).then(checkStatus)
+        .then(parseJSON)
+        //.then((data) => ({data}))
         .catch((err) => ({err}));
 }

@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import * as actions from './actions'
 import * as getters from './getters'
 import base from './modules/base'
+import users from './modules/users'
 //import createLogger from 'vuex/dist/logger' //vuex内置的Logger日志插件
 //const debug = process.env.NODE_ENV !== 'production' //发布产品时需要用 Webpack 的 DefinePlugin 来转换 process.env.NODE_ENV !== 'production' 的值为 false
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
     actions,
     getters,
     modules: {
-        base
+        base,
+        users
     },
     //strict: debug,//TODO:开发阶段使用
     //plugins: debug ? [createLogger()] : []//vuex插件

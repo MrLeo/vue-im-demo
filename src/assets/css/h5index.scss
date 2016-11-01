@@ -1,0 +1,143 @@
+@import "fun";
+@import "variable";
+
+.full-index {
+  z-index: 0;
+}
+
+.msg-remind {
+  position: fixed;
+  top: 0;
+  right: rem(20px);
+  z-index: 999999999;
+  height: $headerHeight;
+  overflow: hidden;
+  line-height: $headerHeight;
+  color: #ffffff;
+  //ul{
+  //  background-color: #333;
+  //}
+  li {
+    height: $headerHeight;
+    position: relative;
+    padding-right: rem(18px);
+
+    span {
+      display: inline-block;
+      max-width: rem(50px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    em {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      padding: 0 rem(4px);
+      width: auto;
+      min-width: rem(18px);
+      height: rem(18px);
+      margin-top: - rem(18px);
+      line-height: rem(18px);
+      border-radius: rem(9px);
+      color: #fff;
+      text-align: center;
+      font-size: rem(14px);
+      background-color: #f43531;
+    }
+  }
+}
+
+.user-list {
+  position: relative;
+}
+
+._line-fine {
+  position: relative;
+  border-bottom: 1px solid #efefef;
+
+  &:before { //:not(:first-child)
+    content: "";
+    position: absolute;
+    width: 200%;
+    left: 8px;
+    top: 0;
+    transform: scale(.5);
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5);
+    -webkit-transform-origin: 0 0;
+    background-color: #b7b7b7;
+    height: 1px;
+    z-index: 3;
+  }
+
+}
+
+.info {
+  /*定义为flexbox的“父元素”*/
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  /*子元素沿主轴对齐方式居中*/
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  /*子元素沿侧轴对齐方式垂直居中*/
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  width: 100%;
+  padding: rem(8px);
+  background-color: #fff;
+  transition: transform .2s linear;
+
+  .ico-box {
+    position: relative;
+    float: left;
+    width: rem(40px);
+    height: rem(40px);
+    margin-right: rem(10px);
+  }
+
+  .ico {
+    height: 100%;
+    border-radius: 100%;
+    overflow: hidden;
+  }
+
+  .news-count {
+    position: absolute;
+    font-style: normal;
+    font-family: PingFang SC, Hiragino Sans GB, Arial, Microsoft YaHei, Helvetica;
+    right: rem(-9px);
+    top: rem(-5px);
+    z-index: 2;
+    padding: 0 rem(4px);
+    width: auto;
+    min-width: rem(18px);
+    height: rem(18px);
+    line-height: rem(18px);
+    border-radius: rem(9px);
+    color: #fff;
+    text-align: center;
+    font-size: rem(14px);
+    background-color: #f43531;
+  }
+
+  .desc{
+    flex:1;
+  }
+  .desc-title {
+    height: rem(25px);
+    line-height: rem(25px);
+    font-size: rem(18px);
+    color: #000;
+  }
+
+  .desc-time {
+    float: right;
+    color: #b2b2b2;
+  }
+
+}

@@ -8,15 +8,16 @@ import * as filters from './filters'
 // https://github.com/github/fetch
 import 'whatwg-fetch'
 
-// Lazyload - 图片延迟加载
-// <https://github.com/hilongjw/vue-lazyload>
-// supports both of Vue 1.0 and Vue 2.0
-import VueLazyload from 'vue-lazyload'
-Vue.use(VueLazyload, {
-    preLoad: 1.3,
-    error: './static/images/icon_default.png',
-    loading: './static/images/icon_default.png',
-    attempt: 1
+import VueTimeago from 'vue-timeago'
+Vue.use(VueTimeago, {
+    name: 'timeago', // component name, `timeago` by default
+    autoUpdate: 1,
+    maxTime: 86400,
+    locale: 'zh-CN',
+    locales: {
+        'en-US': require('vue-timeago/locales/en-US.json'),
+        'zh-CN': require('vue-timeago/locales/zh-CN.json')
+    }
 })
 
 Object.keys(filters).forEach(key => {
@@ -27,11 +28,18 @@ Vue.config.devtools = true//TODO：开发阶段使用
 
 window.router = router
 
+//将服务端渲染时候的状态写入vuex
+//if(window.__INITIAL_STATE__){
+//    store.replaceState(window.__INITIAL_STATE__)
+//}
+
 const app = new Vue({
     router,
     store,
     ...App // Object spread copying everything from App.vue : render: h => h(App)
-}).$mount('#app')
+}).$mount('#app')//挂载到DOM元素
+
+export {app, store, router}
 
 /* eslint-disable no-new */
 //new Vue({

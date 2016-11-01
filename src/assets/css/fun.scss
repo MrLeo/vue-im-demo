@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+@function rem($pixels) {
+  @return $pixels / 20px * 1rem;
+}

@@ -1,0 +1,88 @@
+@charset "UTF-8";
+@import "fun";
+@import "base";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, "Microsoft YaHei", "微软雅黑", Verdana, sans-serif;
+}
+
+.clear {
+  display: block !important;
+  clear: both !important;
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+}
+
+/*fade动画 begin*/
+/*fade 进入后 ＆ 离开后 状态*/
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s ease;
+
+}
+
+/*fade 进入前 ＆ 离开后*/
+.fade-enter, .fade-leave-active {
+  opacity: 0
+
+}
+
+/*slide动画 begin*/
+/*slide-left 进入前 状态*/
+/*slide-right 离开后 状态*/
+.slide-left-enter, .slide-right-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(30px, 0);
+  transform: translate(30px, 0);
+
+}
+
+/*slide-left 离开后 状态*/
+/*slide-right 进入前 状态*/
+.slide-left-leave-active, .slide-right-enter {
+  opacity: 0;
+  -webkit-transform: translate(-30px, 0);
+  transform: translate(-30px, 0);
+
+}
+
+/*slide-down 进入的开始状态 ＆ 离开的结束状态*/
+.slide-down-enter, .slide-down-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(0, -30px);
+  transform: translate(0, -30px);
+
+}
+
+/*slide-down 进入的结束状态 ＆ 离开的开始状态*/
+.slide-down-enter-active, .slide-down-leave {
+  transition: all .5s ease;
+
+}
